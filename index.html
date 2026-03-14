@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ZPA Application-Specific Access Policies Simulator — Interactive Zero Trust Network Access management dashboard">
+    <title>ZPA Access Policy Manager — Zscaler Private Access</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ============ HEADER ============ -->
+    <header class="app-header">
+        <div class="header-left">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" stroke-width="3" fill="none"/>
+                        <path d="M12 20 L20 12 L28 20 L20 28 Z" fill="url(#logoGrad)"/>
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4aa"/>
+                                <stop offset="100%" stop-color="#0088cc"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">ZPA</span>
+                    <span class="logo-subtitle">Private Access</span>
+                </div>
+            </div>
+        </div>
+        <nav class="header-nav">
+            <button class="nav-tab active" data-tab="dashboard">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                Dashboard
+            </button>
+            <button class="nav-tab" data-tab="policies">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Policies
+            </button>
+            <button class="nav-tab" data-tab="segments">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+                Segments
+            </button>
+            <button class="nav-tab" data-tab="users">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                Users
+            </button>
+            <button class="nav-tab" data-tab="monitor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                Monitor
+            </button>
+            <button class="nav-tab" data-tab="simulator">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                Simulator
+            </button>
+        </nav>
+        <div class="header-right">
+            <button class="icon-btn notification-btn" id="notificationBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                <span class="notification-badge">3</span>
+            </button>
+            <div class="user-avatar" title="Admin User">
+                <span>A</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============ MAIN CONTENT ============ -->
+    <main class="app-main">
+
+        <!-- DASHBOARD TAB -->
+        <section class="tab-content active" id="tab-dashboard">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card" data-animate>
+                    <div class="stat-icon stat-icon-policies">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" data-count="12">0</span>
+                        <span class="stat-label">Active Policies</span>
+                    </div>
+                    <div class="stat-trend stat-trend-up">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                        +2 this week
+                    </div>
+                </div>
+                <div class="stat-card" data-animate>
+                    <div class="stat-icon stat-icon-segments">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" data-count="8">0</span>
+                        <span class="stat-label">App Segments</span>
+                    </div>
+                    <div class="stat-trend stat-trend-up">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                        +1 this week
+                    </div>
+                </div>
+                <div class="stat-card" data-animate>
+                    <div class="stat-icon stat-icon-users">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" data-count="156">0</span>
+                        <span class="stat-label">Connected Users</span>
+                    </div>
+                    <div class="stat-trend stat-trend-up">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                        +18 today
+                    </div>
+                </div>
+                <div class="stat-card" data-animate>
+                    <div class="stat-icon stat-icon-threats">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" data-count="3">0</span>
+                        <span class="stat-label">Threat Events</span>
+                    </div>
+                    <div class="stat-trend stat-trend-down">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/></svg>
+                        -5 this week
+                    </div>
+                </div>
+            </div>
+
+            <!-- Architecture Diagram -->
+            <div class="section-card architecture-section">
+                <div class="section-header">
+                    <h2>ZPA Zero Trust Architecture</h2>
+                    <span class="section-badge">Live</span>
+                </div>
+                <div class="architecture-diagram">
+                    <div class="arch-node arch-user" id="archUser">
+                        <div class="arch-node-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <span class="arch-node-label">Remote User</span>
+                        <span class="arch-node-sub">Client Connector</span>
+                    </div>
+
+                    <div class="arch-connector">
+                        <div class="arch-line">
+                            <div class="arch-packet arch-packet-1"></div>
+                        </div>
+                        <span class="arch-connector-label">TLS Tunnel (Outbound)</span>
+                    </div>
+
+                    <div class="arch-node arch-cloud" id="archCloud">
+                        <div class="arch-node-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
+                        </div>
+                        <span class="arch-node-label">ZPA Cloud</span>
+                        <span class="arch-node-sub">Service Edge (Broker)</span>
+                    </div>
+
+                    <div class="arch-connector">
+                        <div class="arch-line">
+                            <div class="arch-packet arch-packet-2"></div>
+                        </div>
+                        <span class="arch-connector-label">TLS Tunnel (Outbound)</span>
+                    </div>
+
+                    <div class="arch-node arch-app" id="archApp">
+                        <div class="arch-node-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        </div>
+                        <span class="arch-node-label">Private App</span>
+                        <span class="arch-node-sub">App Connector</span>
+                    </div>
+                </div>
+                <div class="arch-info-bar">
+                    <div class="arch-info-item">
+                        <span class="arch-info-dot dot-green"></span>
+                        Inside-Out Connectivity — No inbound ports exposed
+                    </div>
+                    <div class="arch-info-item">
+                        <span class="arch-info-dot dot-blue"></span>
+                        Microsegmentation — App-level access, not network-level
+                    </div>
+                    <div class="arch-info-item">
+                        <span class="arch-info-dot dot-teal"></span>
+                        Zero Trust — Verify identity before granting access
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Recent Access Events</h2>
+                    <button class="btn btn-ghost" onclick="switchTab('monitor')">View All</button>
+                </div>
+                <div class="activity-list" id="dashboardActivity">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- POLICIES TAB -->
+        <section class="tab-content" id="tab-policies">
+            <div class="tab-header">
+                <div>
+                    <h1>Access Policies</h1>
+                    <p class="tab-description">Manage application-specific access policies. Policies are evaluated top-down; the first match applies.</p>
+                </div>
+                <button class="btn btn-primary" id="addPolicyBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Add Policy
+                </button>
+            </div>
+
+            <div class="toolbar">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="policySearch" placeholder="Search policies...">
+                </div>
+                <div class="filter-group">
+                    <select id="policyFilter">
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                    <select id="policyActionFilter">
+                        <option value="all">All Actions</option>
+                        <option value="allow">Allow</option>
+                        <option value="deny">Deny</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table" id="policiesTable">
+                    <thead>
+                        <tr>
+                            <th>Priority</th>
+                            <th>Policy Name</th>
+                            <th>Action</th>
+                            <th>Users / Groups</th>
+                            <th>App Segments</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="policiesBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="policy-info-banner">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <div>
+                    <strong>Policy Evaluation:</strong> Rules are evaluated in top-down order. The first matching rule is applied. If no rules match, access is <strong>implicitly denied</strong>.
+                </div>
+            </div>
+        </section>
+
+        <!-- SEGMENTS TAB -->
+        <section class="tab-content" id="tab-segments">
+            <div class="tab-header">
+                <div>
+                    <h1>Application Segments</h1>
+                    <p class="tab-description">Manage private application segments. Each segment defines the applications users can access through ZPA.</p>
+                </div>
+                <button class="btn btn-primary" id="addSegmentBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Add Segment
+                </button>
+            </div>
+
+            <div class="segments-grid" id="segmentsGrid">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- USERS TAB -->
+        <section class="tab-content" id="tab-users">
+            <div class="tab-header">
+                <div>
+                    <h1>Users & Groups</h1>
+                    <p class="tab-description">Manage user identities, roles, and group-based access assignments for Zero Trust policy enforcement.</p>
+                </div>
+                <button class="btn btn-primary" id="addUserBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Add User
+                </button>
+            </div>
+
+            <div class="toolbar">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="userSearch" placeholder="Search users...">
+                </div>
+                <div class="filter-group">
+                    <select id="userRoleFilter">
+                        <option value="all">All Roles</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Engineer">Engineer</option>
+                        <option value="Analyst">Analyst</option>
+                        <option value="Contractor">Contractor</option>
+                        <option value="Guest">Guest</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table" id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Groups</th>
+                            <th>Device Posture</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- MONITOR TAB -->
+        <section class="tab-content" id="tab-monitor">
+            <div class="tab-header">
+                <div>
+                    <h1>Real-Time Monitoring</h1>
+                    <p class="tab-description">Live access event monitoring and policy evaluation logs.</p>
+                </div>
+                <div class="monitor-controls">
+                    <button class="btn btn-ghost" id="clearLogsBtn">Clear Logs</button>
+                    <button class="btn btn-primary" id="toggleLiveBtn">
+                        <span class="live-dot"></span>
+                        Live
+                    </button>
+                </div>
+            </div>
+
+            <div class="monitor-stats">
+                <div class="monitor-stat">
+                    <span class="monitor-stat-value" id="monitorAllowed">0</span>
+                    <span class="monitor-stat-label">Allowed</span>
+                </div>
+                <div class="monitor-stat">
+                    <span class="monitor-stat-value" id="monitorDenied">0</span>
+                    <span class="monitor-stat-label">Denied</span>
+                </div>
+                <div class="monitor-stat">
+                    <span class="monitor-stat-value" id="monitorWarnings">0</span>
+                    <span class="monitor-stat-label">Warnings</span>
+                </div>
+                <div class="monitor-stat">
+                    <span class="monitor-stat-value" id="monitorTotal">0</span>
+                    <span class="monitor-stat-label">Total Events</span>
+                </div>
+            </div>
+
+            <div class="log-feed" id="logFeed">
+                <div class="log-empty">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    <p>Waiting for events...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIMULATOR TAB -->
+        <section class="tab-content" id="tab-simulator">
+            <div class="tab-header">
+                <div>
+                    <h1>Policy Evaluation Simulator</h1>
+                    <p class="tab-description">Test access scenarios to see which policy matches. Demonstrates ZPA's top-down, first-match evaluation model.</p>
+                </div>
+            </div>
+
+            <div class="simulator-layout">
+                <div class="simulator-form-card">
+                    <h3>Test Access Request</h3>
+                    <div class="sim-form-group">
+                        <label>Select User</label>
+                        <select id="simUser">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                    <div class="sim-form-group">
+                        <label>Target Application Segment</label>
+                        <select id="simSegment">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                    <div class="sim-form-group">
+                        <label>Client Type</label>
+                        <select id="simClientType">
+                            <option value="connector">Client Connector</option>
+                            <option value="browser">Browser Access</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary btn-full" id="runSimBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        Evaluate Access
+                    </button>
+                </div>
+
+                <div class="simulator-result-card" id="simResultCard">
+                    <div class="sim-result-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        <p>Run a simulation to see the policy evaluation result</p>
+                    </div>
+                </div>
+
+                <div class="simulator-trace-card" id="simTraceCard" style="display:none;">
+                    <h3>Policy Evaluation Trace</h3>
+                    <div class="sim-trace-list" id="simTraceList">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============ MODAL ============ -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Policy</h3>
+                <button class="icon-btn modal-close" id="modalClose">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ TOAST ============ -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
